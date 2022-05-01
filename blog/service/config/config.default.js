@@ -32,9 +32,9 @@ module.exports = appInfo => {
       // username
       user: 'root',
       // password
-      password: '12345678',
+      password: 'root',
       // database
-      database: 'react-blog',    
+      database: 'react_blog',
     },
     // load into app, default is open
     app: true,
