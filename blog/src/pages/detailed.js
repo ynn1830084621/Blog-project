@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../style/pages/comm.css';
 import Header from '../components/Header';
 import Author from '../components/Author';
@@ -9,8 +9,18 @@ import '../style/pages/detailed.css';
 import ReactMarkdown from 'react-markdown';
 import MarkNav from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
+import axios from 'axios';
 
-function Detailed() {
+function Detailed(props) {
+    console.log(props)
+    useEffect(() => {
+        const fetchDate = async () => {
+        const result = await axios('http://127.0.0.1:7001/default/getArticleById'+id);
+        console.log(result.data, 'data')
+        // setList(result.data.data)
+        };
+        fetchDate();
+    }, [])
     let markdown='# P01:课程介绍和环境搭建\n' +
     '[ **M** ] arkdown + E [ **ditor** ] = **Mditor**  \n' +
     '> Mditor 是一个简洁、易于集成、方便扩展、期望舒服的编写 markdown 的编辑器，仅此而已... \n\n' +
