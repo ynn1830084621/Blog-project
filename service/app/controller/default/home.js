@@ -19,6 +19,7 @@ class HomeController extends Controller {
   }
   async getArticleById() {
     const id = this.ctx.params.id;
+    console.log(id, 'id111');
     const sql = 'SELECT article.id as id,' +
     'article.title as title,' +
     'article.introduce as introduce,' +
