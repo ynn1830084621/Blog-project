@@ -13,15 +13,15 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
 import { useLocation, useParams } from 'react-router-dom';
 import Tocify from '../components/tocify.tsx';
+import servicePath from '../config/apiUrl';
 
-function Detailed(props) {
+function Detailed() {
     const params = useParams();
-    const location = useLocation();
-    console.log(params, location)
+    //const location = useLocation();
     const [detail, setDetail] = useState({article_content:''})
     useEffect(() => {
         const fetchDate = async () => {
-        const result = await axios.get('http://127.0.0.1:7001/default/getArticleById/' + params.id);
+        const result = await axios.get(servicePath.getArticleById + params.id);
         //console.log(result.data, 'data')
         setDetail(result.data.data[0])
         };
@@ -30,6 +30,7 @@ function Detailed(props) {
     const renderer = new marked.Renderer();
     const tocify = new Tocify()
     renderer.heading = function(text, level, raw) {
+        console.log(text, level)
         const anchor = tocify.add(text, level);
         return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
     };
@@ -85,7 +86,7 @@ function Detailed(props) {
                     <Advert/>
                     <Affix offsetTop={5}>
                         <div className='detailed-nav comm-box'>
-                            <div className='nav-title'><title>文章目录</title></div>
+                            <div className='nav-title'>文章目录</div>
                             <div className="toc-list">
                                 {tocify && tocify.render()}
                             </div>

@@ -7,6 +7,7 @@ import Advert from '../components/Advert';
 import Footer from '../components/Footer';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import servicePath from '../config/apiUrl';
 
 
 
@@ -14,7 +15,7 @@ function Home() {
     const [mylist, setList] = useState([]);
     useEffect(() => {
     const fetchDate = async () => {
-      const result = await axios('http://127.0.0.1:7001/default/getArticleList');
+      const result = await axios(servicePath.getArticleList);
       console.log(result.data, 'data')
       setList(result.data.data)
     };
