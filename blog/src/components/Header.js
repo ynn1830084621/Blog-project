@@ -27,7 +27,7 @@ function Header() {
             navigate('/')
         }else {
             console.log(e.key);
-            navigate('/list?id=' + e.key)
+            navigate('/list/' + e.key)
         }
     }
     return (
