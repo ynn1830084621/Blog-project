@@ -1,0 +1,16 @@
+.login-div {
+    margin: 150px auto;
+    width: 400px;
+}
+body {
+    background-color: #f0f0f0;
+}
+icon {
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 12px;
+    right: 16px;
+    cursor: pointer;
+}
