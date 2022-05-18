@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { DesktopOutlined, PieChartOutlined, FileOutlined, UserOutlined } from '@ant-design/icons';
 import '../static/css/AdminIndex.css';
+import { Link } from 'react-router-dom';
+import AddArticle from './AddArticle';
 
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -34,14 +36,14 @@ function AdminIndex() {
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
             </Sider>
             <Layout className="site-layout">
-            <Header className="site-layout-background" style={{padding: 0}}/>
+            {/* <Header className="site-layout-background" style={{padding: 0}}/> */}
             <Content style={{margin: '0 16px',}}>
                 <Breadcrumb style={{margin: '16px 0'}}>
                     <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
                     <Breadcrumb.Item>工作台</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
-                    博客工作台
+                    <Link to='/index/'><AddArticle/></Link>
                 </div>
             </Content>
             <Footer style={{textAlign: 'center'}}>
