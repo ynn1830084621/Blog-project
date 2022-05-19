@@ -34,7 +34,7 @@ module.exports = appInfo => {
       // password
       password: 'root',
       // database
-      database: 'react_blog',
+      database: 'react_blog1',
     },
     // load into app, default is open
     app: true,
@@ -49,7 +49,8 @@ module.exports = appInfo => {
     domainWhiteList: [ '*' ],
   };
   config.cors = {
-    origin: '*',
+    origin: 'http://localhost:3000',
+    credentials: true, // 允许Cook可以跨域
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
 

@@ -1,20 +1,51 @@
 import React, { useState } from 'react';
 import 'antd/dist/antd.css';
-import { Card, Input, Button, Space, Spin } from 'antd';
+import { Card, Input, Button, Space, Spin, message } from 'antd';
 import { UserOutlined , KeyOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import '../static/css/Login.css';
+import servicePath from '../config/apiUrl';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
     const [ userName, setUserName ] = useState('');
-    const [ passWord, setPassWord ] = useState('');
+    const [ password, setPassWord ] = useState('');
     const [ isLoading, setIsLoading ] = useState(false);
-    
+    const navigate = useNavigate();
     const checkLogin = () => {
         setIsLoading(true);
-        setTimeout(()=>{
-            setIsLoading(false)
-        },1000)
+        if (!userName) {
+            message.error('用户名不能为空')
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 1000)
+            return false
+        } else if (!password) {
+            message.error('密码不能为空')
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 1000)
+            return false
+        }
+        const dataPorps = {
+            'userName': userName,
+            'password': password,
+        }
+        axios({
+            method: 'post',
+            url: servicePath.checkLogin,
+            data: dataPorps,
+            withCredentials: true
+        }).then(
+            res => {
+                setIsLoading(false);
+                if (res.data.data === '登录成功') {
+                    localStorage.setItem('Id', res.data.openId)
+                    navigate('/index/')
+                }
+            }
+        )
     }
     return (
         <div className='login-div'>
@@ -28,7 +59,7 @@ function Login() {
                         onChange={(e) => {setUserName(e.target.value)}}
                     />
                     <br/>
-                    <Input 
+                    <Input.Password
                         id='password'
                         size='large'
                         type='text'

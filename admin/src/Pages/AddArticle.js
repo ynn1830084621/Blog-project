@@ -62,6 +62,7 @@ function AddArticle() {
                                 rows={35}
                                 placeholder='文章内容'
                                 onChange={changeContent}
+                                //onPressEnter={changeContent}
                             />
                         </Col>
                         <Col span={12}>
