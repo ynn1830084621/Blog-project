@@ -23,6 +23,22 @@ class MainController extends Controller {
       this.ctx.body = { data: '登录失败' };
     }
   }
+  // 后台文章分类信息
+  async getTypeInfo() {
+    const resType = await this.app.mysql.select('type');
+    this.ctx.body = { data: resType };
+  }
+  // 添加文章
+  async addArticle() {
+    const tmpArticle = this.ctx.request.body;
+    const result = await this.app.mysql.insert('article', tmpArticle);
+    const insertSuccess = result.affectedRows === 1;
+    const insertId = result.insertId;
+    this.ctx.body = {
+      isSuccess: insertSuccess,
+      isId: insertId,
+    };
+  }
 }
 
 module.exports = MainController;

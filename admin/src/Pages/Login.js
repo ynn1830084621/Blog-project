@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import { Card, Input, Button, Space, Spin, message } from 'antd';
-import { UserOutlined , KeyOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { UserOutlined , KeyOutlined } from '@ant-design/icons';
 import '../static/css/Login.css';
 import servicePath from '../config/apiUrl';
 import axios from 'axios';
@@ -41,7 +41,7 @@ function Login() {
             res => {
                 setIsLoading(false);
                 if (res.data.data === '登录成功') {
-                    localStorage.setItem('Id', res.data.openId)
+                    localStorage.setItem('Id', res.data.open)
                     navigate('/index/')
                 }
             }
