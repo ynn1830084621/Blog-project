@@ -23,10 +23,10 @@ function ArticleList() {
             <List 
                 header = {
                     <Row className='list-div'>
-                        <Col span={8}>
+                        <Col span={6}>
                             <b>标题</b>
                         </Col>
-                        <Col span={4}>
+                        <Col span={6}>
                             <b>类别</b>
                         </Col>
                         <Col span={4}>
@@ -45,10 +45,10 @@ function ArticleList() {
                 renderItem={item => (
                     <List.Item>
                         <Row className='list-div'>
-                            <Col span={8}>
+                            <Col span={6}>
                                 {item.title}
                             </Col>
-                            <Col span={4}>
+                            <Col span={6}>
                                 {item.typeName}
                             </Col>
                             <Col span={4}>
