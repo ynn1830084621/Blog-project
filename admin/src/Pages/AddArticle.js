@@ -52,7 +52,6 @@ function AddArticle() {
         axios({
             method: 'get',
             url: servicePath.getTypeInfo,
-            header:{ 'Access-Control-Allow-Origin':'*' },
             withCredentials: true
         }).then((res) => {
             if (res.data.data === '没有登录') {
@@ -66,6 +65,7 @@ function AddArticle() {
     const selectTypeHangdler = (value) => {
         setSelectType(value)
     }
+
     const saveArticle = () => {
         if(!selectedType){
             message.error('必须选择文章类别')
@@ -83,6 +83,7 @@ function AddArticle() {
             message.error('发布日期不能为空')
             return false
         }
+        
         const dataProps ={};//传递到接口的参数
         dataProps.type_id = selectedType;
         dataProps.title = articleTitle;
@@ -90,19 +91,34 @@ function AddArticle() {
         dataProps.introduce = introducemd;
         const datetext = showDate.replace('-', '/');//把字符串转换成时间戳
         dataProps.addTime = (new Date(datetext).getTime())/1000
+        console.log(dataProps, '22222')
         if(articleId === 0) {
             console.log('articleId=:'+articleId)
             dataProps.view_count = Math.ceil(Math.random()*100)+1000
             axios({
                 method: 'post',
-                url: servicePath.AddArticle,
-                dataProps: dataProps,
+                url: servicePath.addArticle,
+                data: dataProps,
                 withCredentials: true
             }).then((res) => {
                 setArticleId(res.data.isId)
                 if(res.data.isSuccess) {
                     message.success('文章保存成功')
                 }else {
+                    message.error('文章保存失败')
+                }
+            })
+        } else {
+            dataProps.id = articleId;
+            axios({
+                method: 'post',
+                url: servicePath.updateArticle,
+                data: dataProps,
+                withCredentials: true
+            }).then((res) => {
+                if(res.data.isSuccess) {
+                    message.success('文章保存成功');
+                } else {
                     message.error('文章保存失败')
                 }
             })

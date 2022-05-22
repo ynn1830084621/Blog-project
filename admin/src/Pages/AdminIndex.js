@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { DesktopOutlined, PieChartOutlined, FileOutlined, UserOutlined } from '@ant-design/icons';
 import '../static/css/AdminIndex.css';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import AddArticle from './AddArticle';
+import ArticleList from './ArticleList'
 
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
     return {
         key,
@@ -19,8 +20,8 @@ const items = [
     getItem('工作台', '1', <PieChartOutlined />),
     getItem('添加文章', '2', <DesktopOutlined />),
     getItem('文章管理', 'sub1', <UserOutlined />, [
-        getItem('添加文章', '3'),
-        getItem('文章列表', '4'),
+        getItem('添加文章', 'AddArticle'),
+        getItem('文章列表', 'ArticleList'),
     ]),
     getItem('留言管理', '9', <FileOutlined />),
 ];
@@ -29,11 +30,25 @@ function AdminIndex() {
     const onCollapse = (collapsed) => {
         setCollapsed(collapsed)
     };
+    const navigate = useNavigate()
+    const handleClickArticle = ((res) => {
+        if(res.key === 'AddArticle') {
+            navigate('/index/add')
+        } else {
+            navigate('/index/list')
+        }
+    })
     return (
         <Layout style={{minHeight: '100vh'}} >
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                 <div className="logo" />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+                <Menu 
+                    theme="dark" 
+                    defaultSelectedKeys={['1']} 
+                    mode="inline" 
+                    onClick={handleClickArticle}
+                    items={items} 
+                />
             </Sider>
             <Layout className="site-layout">
             {/* <Header className="site-layout-background" style={{padding: 0}}/> */}
@@ -45,6 +60,8 @@ function AdminIndex() {
                 <div className="site-layout-background" style={{padding: 24, minHeight: 360}}>
                     <Routes>
                         <Route path='/' exact element={<AddArticle/>} />
+                        <Route path='/add' exact element={<AddArticle/>} />
+                        <Route path='/list' exact element={<ArticleList/>} />
                     </Routes>
                 </div>
             </Content>
