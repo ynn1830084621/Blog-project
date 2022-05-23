@@ -62,6 +62,7 @@ function AdminIndex() {
                         <Route path='/' exact element={<AddArticle/>} />
                         <Route path='/add' exact element={<AddArticle/>} />
                         <Route path='/list' exact element={<ArticleList/>} />
+                        <Route path='/add/:id' exact element={<AddArticle/>} />
                     </Routes>
                 </div>
             </Content>

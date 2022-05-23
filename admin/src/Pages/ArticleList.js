@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../static/css/ArticleList.css';
-import { List, Row, Modal, Button, Col } from 'antd';
+import { List, Row, Modal, Button, Col, message } from 'antd';
 import axios from 'axios';
 import servicePath from '../config/apiUrl';
+import { useNavigate } from 'react-router-dom'
 
+const { confirm } = Modal;
 function ArticleList() {
     const [list, setList] = useState([]);
     useEffect(() => {
@@ -17,6 +19,30 @@ function ArticleList() {
         }).then((res) => {
             setList(res.data.list)
         })
+    }
+    //删除文章
+    const delArticle = (id) => {
+        confirm({
+            title:"确定要删除这篇博客文章吗?",
+            content: '如果你点击OK按钮,文章将会永远被删除',
+            onOk() {
+                axios({
+                    method: "get",
+                    url: servicePath.delArticle + id,
+                    withCredentials: true
+                }).then((res) => {
+                    message.success('文章删除成功')
+                })
+            },
+            onCancel() {
+                message.success('没有任何改变')
+            },
+        })
+    }
+    //修改文章
+    const navigate = useNavigate()
+    const updateArticle  = (id) => {
+        navigate('/index/add/' + id)
     }
     return (
         <div>
@@ -58,8 +84,8 @@ function ArticleList() {
                                 {item.view_count}
                             </Col>
                             <Col span={4}>
-                                <Button type='primary'>修改</Button><br/>
-                                <Button>删除</Button>
+                                <Button type='primary' onClick={ () => {updateArticle(item.id)}}>修改</Button><br/>
+                                <Button onClick={()=>{delArticle(item.id)}}>删除</Button>
                             </Col>
                         </Row>
                     </List.Item>

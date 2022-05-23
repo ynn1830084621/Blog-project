@@ -4,7 +4,7 @@ import '../static/css/AddArticle.css';
 import { marked } from 'marked';
 import axios from 'axios';
 import servicePath from '../config/apiUrl';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -18,12 +18,16 @@ function AddArticle() {
     const [introducemd,setIntroducemd] = useState()            //简介的markdown内容
     const [introducehtml,setIntroducehtml] = useState('等待编辑') //简介的html内容
     const [showDate,setShowDate] = useState()   //发布日期
-    const [updateDate,setUpdateDate] = useState() //修改日志的日期
     const [typeInfo ,setTypeInfo] = useState([]) // 文章类别信息
     const [selectedType,setSelectType] = useState('选择类别') //选择的文章类别
-    
+    const params = useParams();
     useEffect(() => {
         getTypeInfo()
+        let tmpId = params.id;
+        if(tmpId) {
+            setArticleId(tmpId)
+            getArticleById(tmpId)
+        }
     }, []);
 
     const renderer = new marked.Renderer();
@@ -124,6 +128,24 @@ function AddArticle() {
             })
         }
     }
+    const getArticleById  = (id) => {
+        axios({
+            method: 'get',
+            url: servicePath.getArticleById + id,
+            header:{ 'Access-Control-Allow-Origin':'*' },
+            withCredentials: true
+        }).then((res) => {
+            setArticleTitle(res.data.data[0].title)
+            setArticleContent(res.data.data[0].article_content)
+            let html=marked(res.data.data[0].article_content)
+            setMarkdownContent(html)
+            setIntroducemd(res.data.data[0].introduce)
+            let tmpInt = marked(res.data.data[0].introduce)
+            setIntroducehtml(tmpInt)
+            setShowDate(res.data.data[0].addTime)
+            setSelectType(res.data.data[0].typeId)
+        })
+    }
     return (
         <div>
             <Row gutter={5}>
@@ -152,6 +174,7 @@ function AddArticle() {
                         <Col span={12}>
                             <TextArea 
                                 className='markdown-content'
+                                value={articleContent}
                                 rows={35}
                                 placeholder='文章内容'
                                 onChange={changeContent}
@@ -176,6 +199,7 @@ function AddArticle() {
                             <br/>
                             <TextArea 
                                 rows={4}
+                                value={introducemd}
                                 placeholder='文章简介'
                                 onChange={changeIntroduce}
                             />
