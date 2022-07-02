@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../style/components/header.css';
 import { Row, Col, Menu } from 'antd';
 import { Icon } from '@ant-design/compatible';
-import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import servicePath from '../config/apiUrl';
 
