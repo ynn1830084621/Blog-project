@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import servicePath from '../config/apiUrl';
 
-
 function Header() {
     const [ navArray, setNavArray ] = useState([]);
     useEffect(() => {
@@ -34,15 +33,15 @@ function Header() {
         <>
         <div className='header'>
             <Row type='flex' justify='center'>
-                <Col xs={24} sm={24} md={10} lg={15} xl={12}>
+                <Col xs={24} sm={24} md={10} lg={15} xl={6}>
                     <span className='header-logo'>
                     <Link to='/'>
-                        js
+                        ynn
                     </Link>
                     </span>
-                    <span className='header-txt'>专注前端开发学习</span>
+                    <span className='header-txt'>前端开发学习</span>
                 </Col>
-                <Col className='menu-div' xs={0} sm={0} md={14} lg={8} xl={6}>
+                <Col className='menu-div' xs={0} sm={0} md={14} lg={8} xl={12}>
                     <Menu mode='horizontal' onClick={handleClick}>
                         <Menu.Item key='0'>
                             <Icon type='home' />

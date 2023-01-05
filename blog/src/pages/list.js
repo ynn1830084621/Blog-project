@@ -35,7 +35,7 @@ function Home() {
             setMylist(result)
         };
         fetchDate();
-    }, [])
+    }, [params.id])
     return (
         <>
             <div>

@@ -24,41 +24,41 @@ function Home() {
 
   return (
     <>
+      <div>
+        <title>Home</title>
+      </div>
+      <Header/>
+      <Row className='comm-main' type='flex' justify='center'>
+        <Col className='comm-left' xs={24} sm={24} md={16} lg={18} xl={14}>
         <div>
-            <title>Home</title>
+          <List 
+            header={<div>最新日志</div>}
+            itemLayout='vertical'
+            dataSource={mylist}
+            renderItem={item => (
+              <List.Item>
+              <div className='list-title'>
+                <Link to={'/detailed/'+item.id}>
+                  {item.title}
+                </Link>
+              </div>
+              <div className='list-icon'>
+                <span><Icon type="calendar" />{item.addTime}</span>
+                <span><Icon type="video-camera" />{item.typeName}</span>
+                <span><Icon type="eye-o" />{item.view_count}</span>
+              </div>
+              <div className='list-context'>{item.introduce}</div>
+              </List.Item>
+            )}
+          />
         </div>
-        <Header/>
-        <Row className='comm-main' type='flex' justify='center'>
-            <Col className='comm-left' xs={24} sm={24} md={16} lg={18} xl={14}>
-            <div>
-                <List 
-                header={<div>最新日志</div>}
-                itemLayout='vertical'
-                dataSource={mylist}
-                renderItem={item => (
-                    <List.Item>
-                    <div className='list-title'>
-                        <Link to={'/detailed/'+item.id}>
-                            {item.title}
-                        </Link>
-                    </div>
-                    <div className='list-icon'>
-                      <span><Icon type="calendar" />{item.addTime}</span>
-                      <span><Icon type="video-camera" />{item.typeName}</span>
-                      <span><Icon type="eye-o" />{item.view_count}</span>
-                    </div>
-                    <div className='list-context'>{item.introduce}</div>
-                  </List.Item>
-                )}
-              />
-            </div>
-          </Col>
-          <Col className='comm-right' xs={0} sm={0} md={7} lg={5} xl={4}>
-            <Author/>
-            <Advert/>
-          </Col>
-        </Row>
-        <Footer/>
+        </Col>
+        <Col className='comm-right' xs={0} sm={0} md={7} lg={5} xl={4}>
+          <Author/>
+          <Advert/>
+        </Col>
+      </Row>
+      <Footer/>
     </> 
   )
 }
